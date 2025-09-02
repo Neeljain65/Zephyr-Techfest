@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Navbar from "@/components/navbar";
 
 const CosmicGateway = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -330,7 +331,7 @@ const CosmicGateway = () => {
       ref={containerRef}
       className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black text-white overflow-hidden relative"
     >
-      <SystemMetrics />
+     
 
       <div className="fixed inset-0">
         <StarField />
@@ -411,6 +412,7 @@ const CosmicGateway = () => {
       </AnimatePresence>
 
       {/* HERO SECTION */}
+      <Navbar />
       <section className="relative min-h-screen flex items-center justify-center px-4">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-950/80 via-purple-950/60 to-black/90" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,69,249,0.08),transparent_60%)]" />
@@ -519,12 +521,14 @@ const CosmicGateway = () => {
             transition={{ delay: 1.4 }}
           >
            
-            <CosmicButton
+              <Link href={"/zephyr-events"}>
+              <CosmicButton
               variant="secondary"
               className="text-sm tracking-[0.1em] uppercase"
             >
               Book Event
             </CosmicButton>
+              </Link>
           </motion.div>
         </motion.div>
 
@@ -584,7 +588,7 @@ const CosmicGateway = () => {
       </section>
 
       {/* ABOUT US SECTION */}
-      <section className="relative py-24 px-4 bg-gradient-to-b from-indigo-950/10 to-black/0">
+      <section id="About" className="relative py-24 px-4 bg-gradient-to-b from-indigo-950/10 to-black/0">
        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-7xl mx-auto w-full">
       <WobbleCard
         containerClassName="col-span-1 lg:col-span-2 h-full bg-gradient-to-br from-purple-900/60 to-indigo-900/50 min-h-[500px] lg:min-h-[300px]"
@@ -892,7 +896,7 @@ const CosmicGateway = () => {
       </section>
 
       {/* CONTACT SECTION */}
-      <section className="relative py-32 px-4">
+      <section id="Contact" className="relative py-32 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -967,12 +971,12 @@ const CosmicGateway = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={"/zephyr-events"}>
               <CosmicButton variant="primary" className="text-lg px-12 py-4">
-                🌟 INITIATE_CONTACT
+                🌟 Get Started
               </CosmicButton>
-              <CosmicButton variant="secondary" className="text-lg px-12 py-4">
-                📡 SUBSCRIBE_UPDATES
-              </CosmicButton>
+              </Link>
+             
             </div>
           </motion.div>
         </div>
