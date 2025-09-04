@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import Footer from "../components/footer";
 import eventsData from "../../lib/data"; // Importing events data
@@ -14,22 +15,19 @@ import {
 } from "../../components/ui/dialog";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 
-
 const CosmicGateway = () => {
+  const [isClient, setIsClient] = useState(false); // Fix for Hydration Error
   const [isLoaded, setIsLoaded] = useState(false);
   const [systemStatus, setSystemStatus] = useState("INITIALIZING");
-  // const [activeTimeline, setActiveTimeline] = useState(0); TIMELINE SECTION PENDING
-  // timeline / faq state removed (not used in this page)
   const containerRef = useRef(null);
-  // scroll progress currently unused
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Parallax transforms for cosmic depth -> to be used in timeline section
-  // const y1 = useTransform(scrollYProgress, [0, 1], [0, -300]);
-  // const y2 = useTransform(scrollYProgress, [0, 1], [0, -600]);
-  // const rotateX = useTransform(scrollYProgress, [0, 1], [0, 15]);
+  useEffect(() => {
+    // This hook runs only on the client side, after the component mounts
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const statusSequence = [
@@ -62,16 +60,6 @@ const CosmicGateway = () => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
-
-  // Stellar pulse effect
-  // useEffect(() => {
-  //   const pulseInterval = setInterval(() => {
-  //     setStellarPulse(true);
-  //     setTimeout(() => setStellarPulse(false), 200);
-  //   }, 6000);
-
-  //   return () => clearInterval(pulseInterval);
-  // }, []);
 
   const StarField = () => {
     const stars = Array.from({ length: 200 }, (_, i) => ({
@@ -180,47 +168,56 @@ const CosmicGateway = () => {
     />
   );
 
- 
-  // (removed timeline/sponsors/glimpses/faqs arrays - unused in this view)
-
-  // EVENTS: generate ~50 sample events sized for a dense grid
   const [dialogOpen, setDialogOpen] = useState(false);
- interface EventType {
-  id: number;
-  title: string;
-  price: string;
-  tag: string;
-  college: string;
-  image: string;
-  desc?: string;
-}
 
-const events: EventType[] = eventsData;
+  // Updated EventType interface to use 'committee'
+  interface EventType {
+    id: number;
+    title: string;
+    price: string;
+    tag: string;
+    committee: string;
+    image: string;
+    desc?: string;
+    teamSize?: { min: number; max: number };
+  }
 
-
+  const events: EventType[] = eventsData;
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
 
-  const colleges = Array.from(new Set(events.map((e) => e.college)));
+  // Changed 'colleges' to 'committees'
+  const committees = Array.from(new Set(events.map((e) => e.committee)));
 
-
- // Using imported events data
   type SortOption = "alpha" | "price-asc" | "price-desc";
   const [selectedSort, setSelectedSort] = useState<SortOption>("alpha");
-  const [selectedCollege, setSelectedCollege] = useState<string>("all");
+
+  // Renamed state from 'selectedCollege' to 'selectedCommittee'
+  const [selectedCommittee, setSelectedCommittee] = useState<string>("all");
 
   const parsePrice = (p: string) => Number(p.replace(/[^0-9.-]+/g, "")) || 0;
 
   const displayedEvents = events
-    .filter((e) => (selectedCollege === "all" ? true : e.college === selectedCollege))
+    // Updated filter logic to use 'committee'
+    .filter((e) =>
+      selectedCommittee === "all" ? true : e.committee === selectedCommittee
+    )
     .slice()
     .sort((a, b) => {
       if (selectedSort === "alpha") return a.title.localeCompare(b.title);
-      if (selectedSort === "price-asc") return parsePrice(a.price) - parsePrice(b.price);
-      if (selectedSort === "price-desc") return parsePrice(b.price) - parsePrice(a.price);
+      if (selectedSort === "price-asc")
+        return parsePrice(a.price) - parsePrice(b.price);
+      if (selectedSort === "price-desc")
+        return parsePrice(b.price) - parsePrice(a.price);
       return 0;
     });
 
-  const EventCard = ({ event, onClick }: { event: EventType; onClick?: () => void }) => {
+  const EventCard = ({
+    event,
+    onClick,
+  }: {
+    event: EventType;
+    onClick?: () => void;
+  }) => {
     return (
       <div
         onClick={onClick}
@@ -233,10 +230,18 @@ const events: EventType[] = eventsData;
         </div>
 
         <div className="w-full h-32 rounded-md overflow-hidden mb-3 bg-gradient-to-tr from-purple-800/20 to-indigo-800/10 flex items-center justify-center">
-          <Image src={event.image} alt={event.title} width={80} height={80} className="opacity-90" />
+          <Image
+            src={event.image}
+            alt={event.title}
+            width={80}
+            height={80}
+            className="opacity-90"
+          />
         </div>
 
-        <div className="font-semibold text-sm text-white mb-1 truncate">{event.title}</div>
+        <div className="font-semibold text-sm text-white mb-1 truncate">
+          {event.title}
+        </div>
         <div className="text-xs text-purple-200 font-mono">{event.price}</div>
       </div>
     );
@@ -247,10 +252,10 @@ const events: EventType[] = eventsData;
       ref={containerRef}
       className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black text-white overflow-hidden relative"
     >
-     
-
       <div className="fixed inset-0">
-        <StarField />
+        {/* Conditionally render StarField only on the client */}
+        {isClient && <StarField />}
+
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-indigo-900/30 to-black/50" />
 
         <div className="absolute top-0 left-1/4 w-px h-full">
@@ -296,7 +301,7 @@ const events: EventType[] = eventsData;
 
                 <motion.div
                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                           w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                                  w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
                   animate={{
                     boxShadow: [
                       "0 0 20px rgba(139, 69, 249, 0.5)",
@@ -350,31 +355,35 @@ const events: EventType[] = eventsData;
             </div>
 
             <div className="flex items-center gap-3">
-              <label className="text-xs font-mono text-purple-300 mr-2">Sort</label>
+              <label className="text-xs font-mono text-purple-300 mr-2">
+                Sort
+              </label>
               <select
-  value={selectedSort}
-  onChange={(e) => setSelectedSort(e.target.value as SortOption)}
-  className="bg-black/50 text-white px-3 py-2 rounded-md border border-white/10 font-mono text-sm"
->
-  <option value="all">All</option>
-    <option value="alpha">Alphabetical</option>
-    <option value="price-asc">Price: Low → High</option>
-    <option value="price-desc">Price: High → Low</option>
-</select>
-
-
-              <label className="text-xs font-mono text-purple-300 ml-4 mr-2">College</label>
-              <select
-                value={selectedCollege}
-                onChange={(e) => setSelectedCollege(e.target.value)}
+                value={selectedSort}
+                onChange={(e) => setSelectedSort(e.target.value as SortOption)}
                 className="bg-black/50 text-white px-3 py-2 rounded-md border border-white/10 font-mono text-sm"
               >
                 <option value="all">All</option>
-                 {colleges.map((college) => (
-    <option key={college} value={college}>
-      {college}
-    </option>
-  ))}
+                <option value="alpha">Alphabetical</option>
+                <option value="price-asc">Price: Low → High</option>
+                <option value="price-desc">Price: High → Low</option>
+              </select>
+
+              {/* Updated the filter dropdown for 'committee' */}
+              <label className="text-xs font-mono text-purple-300 ml-4 mr-2">
+                Committee
+              </label>
+              <select
+                value={selectedCommittee}
+                onChange={(e) => setSelectedCommittee(e.target.value)}
+                className="bg-black/50 text-white px-3 py-2 rounded-md border border-white/10 font-mono text-sm"
+              >
+                <option value="all">All</option>
+                {committees.map((committee) => (
+                  <option key={committee} value={committee}>
+                    {committee}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -395,34 +404,50 @@ const events: EventType[] = eventsData;
       </section>
 
       {/* EVENT DIALOG */}
-      <Dialog open={dialogOpen} onOpenChange={(open) => {
-        if(!open) setSelectedEvent(null);
-        setDialogOpen(open);
-      }}>
+      <Dialog
+        open={dialogOpen}
+        onOpenChange={(open) => {
+          if (!open) setSelectedEvent(null);
+          setDialogOpen(open);
+        }}
+      >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{selectedEvent?.title ?? 'Event Details'}</DialogTitle>
+            <DialogTitle>{selectedEvent?.title ?? "Event Details"}</DialogTitle>
           </DialogHeader>
 
           <div className="flex flex-col md:flex-row gap-4">
             <div className="w-full md:w-40 h-40 bg-slate-800 rounded-md flex items-center justify-center">
               {selectedEvent && (
-                <Image src={selectedEvent.image} alt={selectedEvent.title} width={112} height={112} />
+                <Image
+                  src={selectedEvent.image}
+                  alt={selectedEvent.title}
+                  width={112}
+                  height={112}
+                />
               )}
             </div>
             <div className="flex-1">
-              <div className="text-sm text-purple-200 font-mono mb-2">{selectedEvent?.price}</div>
-              <DialogDescription>
-                {selectedEvent?.desc}
-              </DialogDescription>
+              <div className="text-sm text-purple-200 font-mono mb-2">
+                {selectedEvent?.price}
+              </div>
+              <DialogDescription>{selectedEvent?.desc}</DialogDescription>
             </div>
           </div>
 
           <DialogFooter>
             <div className="flex gap-2 mt-4">
-              <button className="px-4 py-2 bg-purple-600 text-white rounded-md font-mono">Register</button>
-              <DialogClose>
-                <button className="px-4 py-2 bg-gray-800 text-white rounded-md font-mono">Close</button>
+              {selectedEvent && (
+                <Link href={`/register/${selectedEvent.id}`}>
+                  <button className="px-4 py-2 bg-purple-600 text-white rounded-md font-mono">
+                    Register
+                  </button>
+                </Link>
+              )}
+              <DialogClose asChild>
+                <button className="px-4 py-2 bg-gray-800 text-white rounded-md font-mono">
+                  Close
+                </button>
               </DialogClose>
             </div>
           </DialogFooter>
@@ -470,7 +495,7 @@ const events: EventType[] = eventsData;
                 <motion.div
                   key={index}
                   className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-sm 
-                           border border-purple-400/30 p-6 rounded-xl shadow-lg shadow-purple-500/10"
+                                border border-purple-400/30 p-6 rounded-xl shadow-lg shadow-purple-500/10"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
