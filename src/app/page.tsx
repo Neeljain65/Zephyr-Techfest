@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
+import Image from "next/image";
 
 const CosmicGateway = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -603,7 +604,7 @@ const CosmicGateway = () => {
             popular AI platform for developers.
           </p>
         </div>
-        <img
+        <Image
           src="/linear.webp"
           width={500}
           height={500}
@@ -623,7 +624,7 @@ const CosmicGateway = () => {
         <div className="max-w-sm">
           Some Images
         </div>
-        <img
+        <Image
           src="/linear.webp"
           width={500}
           height={500}

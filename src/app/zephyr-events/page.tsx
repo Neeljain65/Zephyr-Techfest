@@ -176,9 +176,10 @@ const CosmicGateway = () => {
     title: string;
     price: string;
     tag: string;
-    committee: string;
+    college: string;
     image: string;
     desc?: string;
+    prize_pool?: string;
     teamSize?: { min: number; max: number };
   }
 
@@ -186,7 +187,7 @@ const CosmicGateway = () => {
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
 
   // Changed 'colleges' to 'committees'
-  const committees = Array.from(new Set(events.map((e) => e.committee)));
+  const committees = Array.from(new Set(events.map((e) => e.college)));
 
   type SortOption = "alpha" | "price-asc" | "price-desc";
   const [selectedSort, setSelectedSort] = useState<SortOption>("alpha");
@@ -199,7 +200,7 @@ const CosmicGateway = () => {
   const displayedEvents = events
     // Updated filter logic to use 'committee'
     .filter((e) =>
-      selectedCommittee === "all" ? true : e.committee === selectedCommittee
+      selectedCommittee === "all" ? true : e.college === selectedCommittee
     )
     .slice()
     .sort((a, b) => {
@@ -229,15 +230,15 @@ const CosmicGateway = () => {
           {event.tag}
         </div>
 
-        <div className="w-full h-32 rounded-md overflow-hidden mb-3 bg-gradient-to-tr from-purple-800/20 to-indigo-800/10 flex items-center justify-center">
-          <Image
-            src={event.image}
-            alt={event.title}
-            width={80}
-            height={80}
-            className="opacity-90"
-          />
-        </div>
+        <div className="w-full h-32 rounded-md overflow-hidden mb-3 bg-gradient-to-tr from-purple-800/20 to-indigo-800/10 flex items-center justify-center relative">
+  <Image
+    src={event.image}
+    alt={event.title}
+    fill
+    className="object-cover opacity-90"
+  />
+</div>
+
 
         <div className="font-semibold text-sm text-white mb-1 truncate">
           {event.title}
@@ -417,21 +418,29 @@ const CosmicGateway = () => {
           </DialogHeader>
 
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="w-full md:w-40 h-40 bg-slate-800 rounded-md flex items-center justify-center">
-              {selectedEvent && (
-                <Image
-                  src={selectedEvent.image}
-                  alt={selectedEvent.title}
-                  width={112}
-                  height={112}
-                />
-              )}
-            </div>
+            <div className="w-full md:w-40 h-40 bg-slate-800 rounded-md flex items-center justify-center relative overflow-hidden">
+  {selectedEvent && (
+    <Image
+      src={selectedEvent.image}
+      alt={selectedEvent.title}
+      fill
+      className="object-cover rounded-md"
+    />
+  )}
+</div>
+
             <div className="flex-1">
               <div className="text-sm text-purple-200 font-mono mb-2">
                 {selectedEvent?.price}
               </div>
               <DialogDescription>{selectedEvent?.desc}</DialogDescription>
+            <h1 className="text-lg ">Prize Pool: {selectedEvent?.prize_pool}</h1>
+              {selectedEvent?.teamSize && (
+                <div className="mt-2 text-sm">
+                  <span className="font-mono text-purple-300">Team Size:</span>{" "}
+                  {selectedEvent?.teamSize.min} - {selectedEvent?.teamSize.max}
+                </div>
+              )}
             </div>
           </div>
 

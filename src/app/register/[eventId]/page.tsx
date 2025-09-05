@@ -68,7 +68,7 @@ export default function RegistrationPage() {
     college: "",
     contact: "",
     email: "",
-    teamSize: selectedEvent?.teamSize?.min ?? 1,
+    teamSize: selectedEvent?.teamSize   ? selectedEvent.teamSize.min.toString() : "1",
     teamMembers: "",
     referralCode: "",
   });
