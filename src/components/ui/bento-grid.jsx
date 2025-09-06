@@ -24,7 +24,7 @@ export const BentoGridItem = ({
   return (
     <div
       className={cn(
-        "relative row-span-1 rounded-xl  transition duration-200 shadow-input dark:shadow-none p-4 bg-black dark:border-white/[0.2] border border-transparent justify-between flex flex-col space-y-4",
+        "relative row-span-1 rounded-xl  transition duration-200 shadow-input dark:shadow-none p-4 bg-gradient-to-br from-purple-900/60 to-indigo-400 dark:border-white/[0.2] border border-transparent justify-between flex flex-col space-y-4",
         className
       )}
     >
@@ -47,7 +47,7 @@ export const BentoGridItem = ({
       {showOnHover && (
         <div
           className={cn(
-            "absolute inset-0 p-2 bg-black bg-opacity-90 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-300"
+            "absolute rounded-sm inset-0 p-2 bg-black bg-opacity-90 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-300"
           )}
         >
           <h3 className="text-lg font-bold mb-2">Additional Information</h3>

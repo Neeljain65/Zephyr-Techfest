@@ -247,7 +247,7 @@ const CosmicGateway = () => {
      
 
       <div className="fixed inset-0">
-        <StarField />
+     
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-indigo-900/30 to-black/50" />
 
         <div className="absolute top-0 left-1/4 w-px h-full">
@@ -668,11 +668,9 @@ const CosmicGateway = () => {
       {/* FAQ SECTION */}
       <section className="relative py-32 px-4 bg-gradient-to-b from-indigo-950/20 to-purple-950/20">
         <div className="max-w-4xl mx-auto">
-          <motion.div
+          <div
             className="mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+           
           >
             <div className="font-mono text-purple-300 text-lg mb-4 flex items-center gap-2">
               ❓ COSMIC_DATABASE.QUERY
@@ -683,7 +681,7 @@ const CosmicGateway = () => {
             <p className="text-xl text-blue-200 font-mono">
               Frequently transmitted information
             </p>
-          </motion.div>
+          </div>
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
@@ -691,10 +689,7 @@ const CosmicGateway = () => {
                 key={index}
                 className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 backdrop-blur-sm 
                          border border-purple-400/30 overflow-hidden rounded-xl shadow-lg shadow-purple-500/10"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+            
               >
                 <motion.button
                   className="w-full p-6 text-left flex items-center justify-between 

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import { motion } from "framer-motion";
 import QRCode from "react-qr-code";
+import { usePDF } from "react-to-pdf";
 
-// Define the structure of the registration data we expect from Firebase
 interface RegistrationData {
   eventName: string;
   name: string;
@@ -16,47 +16,55 @@ interface RegistrationData {
   teamSize?: number;
 }
 
-// Updated print styles using Flexbox for perfect centering
+// Print styles to fix faded colors + keep ticket on one page
 const PrintStyles = () => (
   <style jsx global>{`
-    @media print {
-      @page {
-        size: A4;
-        margin: 0;
-      }
+   @media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
 
-      body {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        background-color: #0c0a18;
-        /* Use Flexbox to center the ticket */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      }
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: #0c0a18 !important;
+    margin: 0;
+    padding: 0;
+  }
 
-      body * {
-        visibility: hidden;
-      }
+  body * {
+    visibility: hidden;
+  }
 
-      .printable-ticket,
-      .printable-ticket * {
-        visibility: visible;
-      }
+  .printable-ticket,
+  .printable-ticket * {
+    visibility: visible;
+  }
 
-      .printable-ticket {
-        width: 180mm;
-        box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
-        /* Remove absolute positioning */
-        position: static;
-        transform: none;
-      }
+  .printable-ticket {
+    background: #111827 !important;
+    width: 210mm;
+    max-height: 297mm;
+    margin: 0 auto;
+    padding: 15mm;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+    page-break-after: avoid;
+    overflow: hidden;
+    box-shadow: none !important;
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    transform: none !important;
+  }
 
-      .no-print {
-        display: none;
-      }
-    }
+  .no-print {
+    display: none !important;
+  }
+}
+
+
   `}</style>
 );
 
@@ -85,9 +93,18 @@ export default function TicketPage() {
     }
   }, [registrationId]);
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const { toPDF, targetRef } = usePDF({
+    filename: `zephyr-ticket-${registrationId}.pdf`,
+    page: { 
+      format: 'A4',
+      orientation: 'portrait',
+      margin: 0
+    },
+    canvas: {
+      mimeType: 'image/png',
+      qualityRatio: 1
+    }
+  });
 
   if (isLoading) {
     return (
@@ -111,14 +128,24 @@ export default function TicketPage() {
     <main className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black text-white p-4 sm:p-8 flex flex-col items-center justify-center">
       <PrintStyles />
 
+      {/* === Ticket === */}
       <motion.div
+        ref={targetRef}
         className="w-full max-w-md bg-slate-900/40 border border-purple-400/30 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-purple-500/10 printable-ticket"
+        style={{ breakInside: 'avoid' }}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
         <div className="text-center border-b border-purple-500/20 pb-4 mb-6">
-          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300">
+          <h1
+            className="text-2xl font-bold"
+            style={{
+              background: "linear-gradient(to right, #d8b4fe, #f9a8d4)", // ✅ safe hex gradient
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             ZEPHYR TECHFEST
           </h1>
           <p className="font-mono text-sm text-purple-300">
@@ -149,67 +176,44 @@ export default function TicketPage() {
           )}
         </div>
 
-        <div className="bg-white p-4 rounded-lg flex items-center justify-center">
-          <QRCode value={registrationId} size={200} />
+        <div className="bg-white p-3 rounded-lg flex items-center justify-center">
+          <QRCode value={registrationId} size={160} />
         </div>
-        <p className="text-center text-xs font-mono text-gray-400 mt-4">
-          Scan this QR at the entry gate. Reg ID: {registrationId}
+        <p className="text-center text-xs font-mono text-gray-400 mt-3">
+          Scan QR at entry. ID: {registrationId}
         </p>
 
-        {/* === EVENT GUIDELINES SECTION === */}
+        {/* === Guidelines === */}
         <div className="border-t border-purple-500/20 pt-4 mt-6">
-          <h2 className="font-mono text-center text-purple-300 text-sm mb-4">
+          <h2 className="font-mono text-center text-purple-300 text-sm mb-3">
             EVENT GUIDELINES
           </h2>
-          <ol className="list-decimal list-inside space-y-2 text-xs text-gray-400 font-mono">
-            <li>
-              Entry requires this e-card and a valid, original college ID card.
-            </li>
-            <li>
-              Gates close 30 minutes prior to the event start time. Late entry
-              is not permitted.
-            </li>
-            <li>
-              Bags are subject to security checks. Prohibited items will be
-              confiscated.
-            </li>
-            <li>
-              Prohibited items include sharp objects, flammable materials,
-              perfumes/deodorants, and outside food/beverages.
-            </li>
-            <li>
-              The organizers are not responsible for any lost or stolen personal
-              belongings.
-            </li>
-            <li>Re-entry to the event premises is strictly not allowed.</li>
-            <li>
-              Use of alcohol, narcotics, and tobacco products is strictly
-              prohibited on campus.
-            </li>
-            <li>
-              Please maintain decorum. Any form of misconduct will result in
-              immediate removal from the event.
-            </li>
-            <li>
-              Follow the instructions provided by event staff and security
-              personnel at all times.
-            </li>
-            <li>
-              This ticket is non-transferable and non-refundable under any
-              circumstances.
-            </li>
+          <ol className="list-decimal list-inside space-y-1 text-xs text-gray-400 font-mono">
+            <li>Entry requires this e-card and a valid college ID card.</li>
+            <li>Gates close 30 minutes prior to event start. No late entry.</li>
+            <li>Bags subject to security checks.</li>
+            <li>No sharp objects, flammable materials, or outside food.</li>
+            <li>Organizers not responsible for lost/stolen items.</li>
+            <li>No re-entry to event premises allowed.</li>
+            <li>No alcohol, narcotics or tobacco on campus.</li>
+            <li>Follow all instructions from event staff and security.</li>
+            <li>Ticket is non-transferable and non-refundable.</li>
           </ol>
         </div>
       </motion.div>
 
-      <motion.button
-        onClick={handlePrint}
-        className="mt-8 relative px-8 py-4 border-2 font-mono font-semibold text-lg transition-all duration-300 backdrop-blur-sm rounded-lg bg-purple-600/30 border-purple-400/60 text-purple-200 hover:bg-purple-500/40 hover:shadow-purple-500/50 no-print"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        Download PDF Ticket
-      </motion.button>
+      {/* Download/Print Button */}
+      <div className="flex gap-4 mt-8 no-print">
+        
+        <motion.button
+          onClick={() => window.print()}
+          className="relative px-6 py-3 border-2 font-mono font-semibold transition-all duration-300 backdrop-blur-sm rounded-lg bg-indigo-600/30 border-indigo-400/60 text-indigo-200 hover:bg-indigo-500/40 hover:shadow-indigo-500/50"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Print Ticket
+        </motion.button>
+      </div>
     </main>
   );
 }

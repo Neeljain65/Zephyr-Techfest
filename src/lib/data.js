@@ -356,7 +356,7 @@ const eventsData = [
     price: "400",
     tag: "IEEE",
     college: "IEEE",
-    image: "/Event30.webp",
+    image: "/event30.webp",
     desc: "This is a team game consisting of five players. Two teams compete against each other trying to plant a bomb in the enemy site while protecting their own site.",
     phone_no: "+91 9920660432",
     prize_pool: "₹18000",

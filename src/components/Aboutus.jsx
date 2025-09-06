@@ -93,7 +93,7 @@ const SkeletonOne = () => {
           hover: { opacity: 1 },
         }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className={`absolute inset-0 bg-black bg-opacity-80 flex justify-center items-center text-white p-4 ${
+        className={`absolute rounded-sm  inset-0 overflow-y-scroll  bg-opacity-80 flex justify-center items-start text-white p-4 ${
           hovered ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
@@ -158,12 +158,12 @@ const SkeletonFive = () => {
           hover: { opacity: 1 },
         }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className={`absolute inset-0 bg-black bg-opacity-80 flex justify-center items-center text-white p-4 ${
+        className={`absolute inset-0 rounded-sm  bg-opacity-80 flex justify-center items-center text-white p-4 ${
           hovered ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
         <p className="lg:text-lg text-sm  text-justify">
-        The TCET Student Development and Welfare Association (TSDW), established in 2004-05 under the guidelines of Mumbai University, serves as a dynamic platform for creativity, innovation, and holistic growth. Commonly known as the Student Council, TSDW represents the student body and spearheads flagship events such as Hackanova These events beautifully merge technology, art, and community engagement.
+        The TCET Student Development and Welfare Association (TSDW), established in 2004-05 under the guidelines of Mumbai University, serves as a dynamic platform for creativity, innovation, and holistic growth. Commonly known as the Student Council, TSDW represents the student body and spearheads flagship events 
         </p>
       </motion.div>
 
