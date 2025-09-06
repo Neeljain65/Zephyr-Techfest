@@ -19,6 +19,7 @@
     "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",
     "html2canvas": "^1.4.1",
+    "icons-react": "^3.7.1",
     "install": "^0.13.0",
     "jspdf": "^3.0.2",
     "lucide-react": "^0.542.0",

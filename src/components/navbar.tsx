@@ -11,7 +11,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-sm font-semibold">Z</div>
+              <img src="/images (4).jpeg" alt="Zephyr Logo" className="h-12 w-12 rounded-full" />
               <span className="font-mono text-sm text-white">Zephyr</span>
             </Link>
           </div>

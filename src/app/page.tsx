@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
 import Image from "next/image";
+import { BentoGridThirdDemo } from "@/components/Aboutus";
+import { InfiniteMovingCardsDemo, InfiniteRightMovingCardsDemo } from "@/components/Sponsors";
 
 const CosmicGateway = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -282,50 +284,55 @@ const CosmicGateway = () => {
       title: "Previous Mission Log",
       type: "HOLO_ARCHIVE",
       size: "2.4 PB",
+      image:"/event2.webp",
       icon: "📡",
     },
     {
       title: "Tech Deployment",
       type: "QUANTUM_DATA",
       size: "847 TB",
+      image:"/event52.webp",
       icon: "🛸",
     },
     {
       title: "Cosmic Integration",
       type: "STELLAR_RECORD",
       size: "1.2 PB",
+      image:"/event3.webp",
       icon: "🌟",
     },
     {
       title: "Universe Analysis",
       type: "SPACE_VIZ",
       size: "564 TB",
+      image:"/event54.webp",
       icon: "🪐",
     },
   ];
 
-  const faqs = [
-    {
-      q: "What is the Cosmic Gateway mission protocol?",
-      a: "A 4-day interdimensional technology symposium featuring cosmic programming challenges, AI/ML from the stars, quantum robotics, and advanced alien tech demonstrations.",
-    },
-    {
-      q: "System requirements for dimensional travel?",
-      a: "Active student consciousness, basic quantum programming knowledge recommended. All beings supported through multi-dimensional competition portals.",
-    },
-    {
-      q: "Registration and portal authentication?",
-      a: "Visit our quantum portal, complete bio-scan verification, select mission trajectories, and process cosmic credits. Early access for premium star-citizens.",
-    },
-    {
-      q: "Resource allocation across galaxies?",
-      a: "Total prize pool exceeds ₹5L across all star systems. Additional rewards include teleportation passes, alien mentorship, and cosmic certification.",
-    },
-    {
-      q: "Remote participation via wormhole?",
-      a: "Multi-dimensional participation supported. Space-station accommodation available. Remote participants get full access to quantum livestreams.",
-    },
-  ];
+ const faqs = [
+  {
+    q: "What is Zephyr?",
+    a: "Zephyr is a 3-day annual techno-cultural festival featuring a blend of technical, non-technical, cultural, and fun events. It’s a platform where students can showcase talent, creativity, and innovation.",
+  },
+  {
+    q: "Who can participate?",
+    a: "Zephyr is open to students from all colleges and disciplines. Whether you’re into tech, arts, management, or cultural activities, there’s an event for everyone.",
+  },
+  {
+    q: "How do I register?",
+    a: "Participants can register online through the Zephyr portal. Simply choose your events, and complete the registration process.",
+  },
+  {
+    q: "What are the prizes?",
+    a: "Zephyr has an overall prize pool of more than ₹5 Lakhs. Winners also receive certificates, goodies, and exclusive opportunities for recognition.",
+  },
+  {
+    q: "Are there online events?",
+    a: "Yes, Zephyr hosts both offline and online events. Some competitions allow remote participation, while cultural and flagship events are held on campus.",
+  },
+];
+
 
   return (
     <div
@@ -511,7 +518,7 @@ const CosmicGateway = () => {
             transition={{ delay: 1.2 }}
           >
             <span className="w-1 h-1 bg-purple-400 rounded-full"></span>
-            15-18.MAR.2025 | [INSTITUTE_NAME] | MISSION_CRITICAL
+            25-27.September.2025 | [TCET] | MISSION_CRITICAL
             <span className="w-1 h-1 bg-purple-400 rounded-full"></span>
           </motion.div>
 
@@ -589,59 +596,11 @@ const CosmicGateway = () => {
       </section>
 
       {/* ABOUT US SECTION */}
-      <section id="About" className="relative py-24 px-4 bg-gradient-to-b from-indigo-950/10 to-black/0">
-       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-7xl mx-auto w-full">
-      <WobbleCard
-        containerClassName="col-span-1 lg:col-span-2 h-full bg-gradient-to-br from-purple-900/60 to-indigo-900/50 min-h-[500px] lg:min-h-[300px]"
-        className=""
-      >
-        <div className="max-w-xs">
-          <h2 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-          About TCET
-          </h2>
-          <p className="mt-4 text-left  text-base/6 text-neutral-200">
-            With over 100,000 mothly active bot users, Gippity AI is the most
-            popular AI platform for developers.
-          </p>
-        </div>
-        <Image
-          src="/linear.webp"
-          width={500}
-          height={500}
-          alt="linear demo image"
-          className="absolute -right-4 lg:-right-[40%] grayscale filter -bottom-10 object-contain rounded-2xl"
-        />
-      </WobbleCard>
-      <WobbleCard containerClassName="col-span-1 min-h-[300px]">
-        <h2 className="max-w-80  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-        About Zephyr 2025
-        </h2>
-        <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200">
-          If someone yells “stop!”, goes limp, or taps out, the fight is over.
-        </p>
-      </WobbleCard>
-      <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
-        <div className="max-w-sm">
-          Some Images
-        </div>
-        <Image
-          src="/linear.webp"
-          width={500}
-          height={500}
-          alt="linear demo image"
-          className="absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl"
-        />
-        <Link href={"/zephyr-events"}>
-        <Button  className=" absolute bottom-10 left-10 bg-purple-600/30 border-purple-400/60 text-purple-200 hover:bg-purple-500/40 hover:shadow-purple-500/50">
-          Learn More
-        </Button>
-        </Link>
-      </WobbleCard>
-    </div>
-      </section>
+       <BentoGridThirdDemo />
+    
 
       {/* TIMELINE SECTION */}
-      <section className="relative py-32 px-4">
+      {/* <section className="relative py-32 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
             className="mb-20"
@@ -713,11 +672,11 @@ const CosmicGateway = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* SPONSORS SECTION */}
       <section className="relative py-32 px-4 bg-gradient-to-b from-purple-950/20 to-indigo-950/20">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             className="mb-20"
             initial={{ opacity: 0, y: 50 }}
@@ -731,40 +690,12 @@ const CosmicGateway = () => {
               Cosmic Partners
             </h2>
             <p className="text-xl text-blue-200 font-mono">
-              Intergalactic enterprise alliances
+            Sponsors from last edition
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sponsors.map((sponsor, index) => (
-              <motion.div
-                key={index}
-                className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-sm 
-                         border border-purple-400/30 hover:border-purple-400/60 p-6 transition-all duration-500 
-                         rounded-xl shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, rotateY: 5 }}
-              >
-                <div className="mb-4">
-                  <div className="font-mono text-xs text-purple-400 mb-2">
-                    {sponsor.category}
-                  </div>
-                  <h3 className="text-xl font-bold text-purple-100 mb-2">
-                    {sponsor.name}
-                  </h3>
-                  <div
-                    className={`inline-block px-3 py-1 font-mono text-xs border rounded-lg
-                    bg-gradient-to-r ${sponsor.color} text-white border-white/30`}
-                  >
-                    {sponsor.tier}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <InfiniteMovingCardsDemo />
+        <InfiniteRightMovingCardsDemo />
         </div>
       </section>
 
@@ -784,7 +715,7 @@ const CosmicGateway = () => {
               Stellar Archives
             </h2>
             <p className="text-xl text-blue-200 font-mono">
-              Interdimensional data records
+            A glimpse into our previous journeys
             </p>
           </motion.div>
 
@@ -805,7 +736,7 @@ const CosmicGateway = () => {
                   className="aspect-video bg-gradient-to-br from-purple-800/30 to-blue-800/30 
                               flex items-center justify-center border-b border-purple-400/30"
                 >
-                  <div className="text-6xl">{glimpse.icon}</div>
+                  <Image fill src={glimpse.image} alt={glimpse.title} className="text-6xl object-cover" />
                 </div>
                 <div className="p-4">
                   <div className="font-mono text-xs text-purple-300 mb-2">
@@ -905,10 +836,10 @@ const CosmicGateway = () => {
             viewport={{ once: true }}
           >
             <div className="font-mono text-purple-300 text-lg mb-4 flex items-center justify-center gap-2">
-              📡 COMMUNICATION_PORTAL.INIT
+              📡 COMMUNICATION_PORTAL
             </div>
             <h2 className="text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300">
-              Establish Cosmic Link
+              Contact us
             </h2>
             <p className="text-xl text-blue-200 font-mono mb-12">
               🌌 Initialize direct quantum communication with mission control 🌌
@@ -918,14 +849,20 @@ const CosmicGateway = () => {
               {[
                 {
                   protocol: "QUANTUM EMAIL",
-                  channel: "contact@cosmicgateway.tech",
+                  channel: "technicalteamtsdw@gmail.com",
                   status: "ACTIVE",
                   icon: "📧",
                 },
                 {
-                  protocol: "STELLAR VOICE",
-                  channel: "+91 1111111111",
-                  status: "STANDBY",
+                  protocol: "Neel jain",
+                  channel: "+91 7020976545",
+                  status: "Outreach Advisory",
+                  icon: "📞",
+                },
+                {
+                  protocol: "Amitabh Dwivedi",
+                  channel: "+91 8429051078",
+                  status: "Technical Advisory",
                   icon: "📞",
                 },
                 {

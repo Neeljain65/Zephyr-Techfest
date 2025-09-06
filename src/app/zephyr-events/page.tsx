@@ -417,20 +417,22 @@ const CosmicGateway = () => {
             <DialogTitle>{selectedEvent?.title ?? "Event Details"}</DialogTitle>
           </DialogHeader>
 
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="w-full md:w-40 h-40 bg-slate-800 rounded-md flex items-center justify-center relative overflow-hidden">
+          <div className="mt-2 flex flex-col md:flex-row gap-4">
+            <div className="w-full h-40 md:w-full md:h-80 bg-slate-800 rounded-md flex items-center justify-center relative overflow-hidden">
   {selectedEvent && (
     <Image
       src={selectedEvent.image}
       alt={selectedEvent.title}
       fill
-      className="object-cover rounded-md"
+      className="object-contain rounded-md"
     />
   )}
 </div>
 
-            <div className="flex-1">
-              <div className="text-sm text-purple-200 font-mono mb-2">
+            
+          </div>
+          <div className="flex-1">
+              <div className="text-sm text-purple-900 font-mono mt-2">
                 {selectedEvent?.price}
               </div>
               <DialogDescription>{selectedEvent?.desc}</DialogDescription>
@@ -442,7 +444,6 @@ const CosmicGateway = () => {
                 </div>
               )}
             </div>
-          </div>
 
           <DialogFooter>
             <div className="flex gap-2 mt-4">
