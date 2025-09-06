@@ -1,28 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import eventsData from "../../../lib/data";
 import { motion } from "framer-motion";
 import { db } from "../../../lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-// --- HELPER COMPONENTS MOVED OUTSIDE ---
-// By defining these here, they are not re-created on every render, which fixes the input focus issue.
-
+// --- HELPER COMPONENTS (NO CHANGE) ---
 const FormInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input
     {...props}
     className="w-full bg-black/50 border border-purple-500/30 rounded-lg px-4 py-3 font-mono text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
   />
 );
-
 const FormLabel = ({ children }: { children: React.ReactNode }) => (
   <label className="font-mono text-sm text-purple-200 mb-2 block">
     {children}
   </label>
 );
-// -----------------------------------------
+// --- END HELPER COMPONENTS ---
 
 interface RazorpaySuccessResponse {
   razorpay_payment_id: string;
@@ -68,30 +65,63 @@ export default function RegistrationPage() {
     college: "",
     contact: "",
     email: "",
-    teamSize: selectedEvent?.teamSize   ? selectedEvent.teamSize.min.toString() : "1",
+    teamSize: selectedEvent?.teamSize
+      ? selectedEvent.teamSize.min.toString()
+      : "1",
     teamMembers: "",
     referralCode: "",
   });
 
+  const [currentPrice, setCurrentPrice] = useState<number | string | undefined>(
+    Array.isArray(selectedEvent?.prices)
+      ? selectedEvent.prices[0].cost
+      : selectedEvent?.price
+  );
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const parsePrice = (priceString: string): number => {
-    return Number(priceString.replace(/[^0-9]/g, ""));
-  };
+  useEffect(() => {
+    if (selectedEvent) {
+      if (Array.isArray(selectedEvent.prices)) {
+        const selectedTeamSize = parseInt(formData.teamSize, 10);
+        const priceInfo = selectedEvent.prices.find(
+          (p) => p.teamSize === selectedTeamSize
+        );
+        if (priceInfo) {
+          setCurrentPrice(priceInfo.cost);
+        } else {
+          setCurrentPrice(selectedEvent.prices[0].cost);
+        }
+      } else {
+        setCurrentPrice(selectedEvent.price);
+      }
+    }
+  }, [formData.teamSize, selectedEvent]);
 
   const getTeamSizeOptions = () => {
     if (!selectedEvent?.teamSize) return null;
     const options = [];
-    for (
-      let i = selectedEvent.teamSize.min;
-      i <= selectedEvent.teamSize.max;
-      i++
-    ) {
-      options.push(
-        <option key={i} value={i}>
-          {i} members
-        </option>
-      );
+
+    if (Array.isArray(selectedEvent.prices)) {
+      selectedEvent.prices.forEach((priceOption) => {
+        options.push(
+          <option key={priceOption.teamSize} value={priceOption.teamSize}>
+            {priceOption.teamSize} members
+          </option>
+        );
+      });
+    } else {
+      for (
+        let i = selectedEvent.teamSize.min;
+        i <= selectedEvent.teamSize.max;
+        i++
+      ) {
+        options.push(
+          <option key={i} value={i}>
+            {i} members
+          </option>
+        );
+      }
     }
     return options;
   };
@@ -107,7 +137,19 @@ export default function RegistrationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedEvent) return;
+    const numericPrice =
+      typeof currentPrice === "string"
+        ? parseInt(currentPrice, 10)
+        : currentPrice;
+
+    if (
+      !selectedEvent ||
+      typeof numericPrice !== "number" ||
+      isNaN(numericPrice)
+    ) {
+      alert("This event is not available for registration at the moment.");
+      return;
+    }
     setIsLoading(true);
 
     try {
@@ -115,6 +157,7 @@ export default function RegistrationPage() {
         eventId: selectedEvent.id,
         eventName: selectedEvent.title,
         ...formData,
+        finalPrice: numericPrice,
         paymentStatus: "pending",
         createdAt: new Date(),
       });
@@ -122,18 +165,11 @@ export default function RegistrationPage() {
 
       const res = await fetch("/api/create-order", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: parsePrice(selectedEvent.price),
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: numericPrice }),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to create payment order.");
-      }
-
+      if (!res.ok) throw new Error("Failed to create payment order.");
       const order = await res.json();
 
       const options: RazorpayOptions = {
@@ -146,23 +182,14 @@ export default function RegistrationPage() {
         handler: async function (response: RazorpaySuccessResponse) {
           const verificationRes = await fetch("/api/verify-payment", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...response,
-              registrationId: registrationId,
-            }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...response, registrationId }),
           });
-
           if (verificationRes.ok) {
             alert("Payment Successful & Verified!");
-            // Redirect to the new ticket page with the registration ID
             router.push(`/ticket/${registrationId}`);
           } else {
-            alert(
-              "Payment was successful, but server verification failed. Please contact support with your payment ID."
-            );
+            alert("Payment successful, but server verification failed.");
           }
         },
         prefill: {
@@ -170,11 +197,8 @@ export default function RegistrationPage() {
           email: formData.email,
           contact: formData.contact,
         },
-        theme: {
-          color: "#8B5CF6",
-        },
+        theme: { color: "#8B5CF6" },
       };
-
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
@@ -193,6 +217,11 @@ export default function RegistrationPage() {
     );
   }
 
+  const isPayable =
+    typeof currentPrice === "string"
+      ? !isNaN(parseInt(currentPrice, 10))
+      : typeof currentPrice === "number";
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black text-white p-4 sm:p-8 flex items-center justify-center">
       <motion.div
@@ -206,12 +235,11 @@ export default function RegistrationPage() {
             Register: {selectedEvent.title}
           </h1>
           <p className="font-mono text-xl text-purple-300">
-            Registration Fee: {selectedEvent.price}
+            Registration Fee: {isPayable ? `₹${currentPrice}` : currentPrice}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* === PERSONAL DETAILS === */}
           <div>
             <FormLabel>Your Full Name (as per College ID)</FormLabel>
             <FormInput
@@ -255,24 +283,26 @@ export default function RegistrationPage() {
             </div>
           </div>
 
-          {/* === CONDITIONAL TEAM FIELDS === */}
-          {selectedEvent.teamSize && (
+          {/* UPDATED: This whole block is now conditional */}
+          {selectedEvent.teamSize && selectedEvent.teamSize.max > 1 && (
             <div className="space-y-6 pt-6 border-t border-purple-500/20">
               <h2 className="font-mono text-lg text-purple-300">
                 Team Details
               </h2>
-              <div>
-                <FormLabel>Number of Team Members</FormLabel>
-                <select
-                  name="teamSize"
-                  value={formData.teamSize}
-                  onChange={handleInputChange}
-                  className="w-full bg-black/50 border border-purple-500/30 rounded-lg px-4 py-3 font-mono text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
-                >
-                  {getTeamSizeOptions()}
-                </select>
-              </div>
-
+              {/* This dropdown only shows if there's a choice to be made */}
+              {selectedEvent.teamSize.min !== selectedEvent.teamSize.max && (
+                <div>
+                  <FormLabel>Number of Team Members</FormLabel>
+                  <select
+                    name="teamSize"
+                    value={formData.teamSize}
+                    onChange={handleInputChange}
+                    className="w-full bg-black/50 border border-purple-500/30 rounded-lg px-4 py-3 font-mono text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                  >
+                    {getTeamSizeOptions()}
+                  </select>
+                </div>
+              )}
               <div>
                 <FormLabel>Team Member Names & College</FormLabel>
                 <textarea
@@ -287,7 +317,6 @@ export default function RegistrationPage() {
             </div>
           )}
 
-          {/* === OTHER FIELDS === */}
           <div>
             <FormLabel>Referral Code (Optional)</FormLabel>
             <FormInput
@@ -302,15 +331,19 @@ export default function RegistrationPage() {
           <div className="pt-6">
             <motion.button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !isPayable}
               className="w-full relative px-8 py-4 border-2 font-mono font-semibold text-lg transition-all duration-300 backdrop-blur-sm rounded-lg bg-purple-600/30 border-purple-400/60 text-purple-200 hover:bg-purple-500/40 hover:shadow-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
               whileHover={{
-                scale: isLoading ? 1 : 1.02,
+                scale: isLoading || !isPayable ? 1 : 1.02,
                 boxShadow: "0 0 30px rgba(139, 69, 249, 0.4)",
               }}
-              whileTap={{ scale: isLoading ? 1 : 0.98 }}
+              whileTap={{ scale: isLoading || !isPayable ? 1 : 0.98 }}
             >
-              {isLoading ? "Processing..." : `Pay ${selectedEvent.price}`}
+              {isLoading
+                ? "Processing..."
+                : isPayable
+                ? `Pay ₹${currentPrice}`
+                : "Registration Closed"}
             </motion.button>
           </div>
         </form>
