@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 // import Image from "next/image";
 export function BentoGridThirdDemo() {
   return (
-    <div className="container my-20 z-10 relative before:absolute before:bg-gradient-to-b from-purple-600 via-purple-950 to-black  before:-inset-2 before:-z-10 before:blur-3xl before:round-[inherit]">
+    <div className="container px-5 my-20 z-10 relative before:absolute before:bg-gradient-to-b from-purple-600 via-purple-950 to-black  before:-inset-2 before:-z-10 before:blur-3xl before:round-[inherit]">
       <BentoGrid className="max-w-7xl mx-auto md:auto-rows-[30rem]">
         {items.map((item, i) => (
           <BentoGridItem
@@ -123,15 +123,15 @@ traveler activates the machine. </p>
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="flex flex-col gap-2 "
       >
-        <p className="text-5xl flex  gap-2 md:text-4xl lg:text-5xl font-bold text-white">
+        <p className="text-3xl flex  gap-2 md:text-4xl lg:text-5xl font-bold text-white">
           Cosmic
           <span className="bg-gradient-to-r from-orange-500 to-purple-800 bg-clip-text text-transparent">
             Zepyr
           </span>
         </p>
        <div>
-         <p className="text-5xl font-bold text-white">Through</p>
-        <p className="text-5xl md:text-4xl lg:text-5xl font-bold text-white mt-2">
+         <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">Through</p>
+        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">
           Intelligence
         </p>
        </div>
@@ -177,7 +177,7 @@ const SkeletonFive = () => {
         className="relative"
       >
         <img
-          src="./img/TSDW.png"
+          src="./TSDW.png"
           alt="Logo"
           className="max-w-full h-auto drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
         />

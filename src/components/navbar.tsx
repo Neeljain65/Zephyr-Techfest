@@ -12,7 +12,6 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2">
               <img src="/images (4).jpeg" alt="Zephyr Logo" className="h-12 w-12 rounded-full" />
-              <span className="font-mono text-sm text-white">Zephyr</span>
             </Link>
           </div>
 

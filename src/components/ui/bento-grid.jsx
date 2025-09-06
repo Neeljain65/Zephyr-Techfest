@@ -47,7 +47,7 @@ export const BentoGridItem = ({
       {showOnHover && (
         <div
           className={cn(
-            "absolute inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-300"
+            "absolute inset-0 p-2 bg-black bg-opacity-90 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-300"
           )}
         >
           <h3 className="text-lg font-bold mb-2">Additional Information</h3>

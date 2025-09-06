@@ -182,102 +182,7 @@ const CosmicGateway = () => {
     />
   );
 
-  const SystemMetrics = () => (
-    <motion.div
-      className="fixed top-6 left-6 z-50 font-mono text-sm text-purple-300"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isLoaded ? 1 : 0 }}
-    >
-      <div
-        className="bg-black/70 backdrop-blur-md p-4 border border-purple-500/40 rounded-lg 
-                      shadow-lg shadow-purple-500/20"
-      >
-        <div>
-          PORTAL: <span className="text-green-400">ACTIVE</span>
-        </div>
-        <div>
-          DIMENSIONS: <span className="text-blue-400">∞</span>
-        </div>
-        <div>
-          ENERGY: <span className="text-yellow-400">847 TW</span>
-        </div>
-      </div>
-    </motion.div>
-  );
 
-  const timelineEvents = [
-    {
-      date: "15 MAR",
-      time: "09:00",
-      title: "Portal Activation",
-      desc: "Gateway initialization & cosmic alignment ceremony",
-      status: "READY",
-      icon: "🌌",
-    },
-    {
-      date: "16 MAR",
-      time: "10:00",
-      title: "Stellar Challenges",
-      desc: "Intergalactic competitions across tech domains",
-      status: "PENDING",
-      icon: "⭐",
-    },
-    {
-      date: "17 MAR",
-      time: "11:00",
-      title: "Cosmic Showcase",
-      desc: "Project demonstrations from across the universe",
-      status: "QUEUED",
-      icon: "🚀",
-    },
-    {
-      date: "18 MAR",
-      time: "16:00",
-      title: "Gateway Closure",
-      desc: "Awards ceremony & portal deactivation",
-      status: "STANDBY",
-      icon: "🌠",
-    },
-  ];
-
-  const sponsors = [
-    {
-      name: "Microsoft",
-      tier: "COSMIC PATRON",
-      category: "ENTERPRISE",
-      color: "from-blue-500 to-cyan-500",
-    },
-    {
-      name: "Google Cloud",
-      tier: "STELLAR ALLY",
-      category: "CLOUD TECH",
-      color: "from-purple-500 to-pink-500",
-    },
-    {
-      name: "Amazon AWS",
-      tier: "GALACTIC PARTNER",
-      category: "INFRASTRUCTURE",
-      color: "from-indigo-500 to-purple-500",
-    },
-    {
-      name: "GitHub",
-      tier: "NEBULA SPONSOR",
-      category: "DEVELOPMENT",
-      color: "from-green-400 to-blue-500",
-    },
-    {
-      name: "Docker",
-      tier: "ASTEROID BACKER",
-      category: "CONTAINERS",
-      color: "from-orange-500 to-red-500",
-    },
-    {
-      name: "NVIDIA",
-      tier: "QUASAR SUPPORTER",
-      category: "AI/GPU",
-      color: "from-emerald-500 to-teal-500",
-    },
-  ];
 
   const glimpses = [
     {
@@ -700,7 +605,7 @@ const CosmicGateway = () => {
       </section>
 
       {/* GLIMPSE SECTION */}
-      <section className="relative py-32 px-4">
+      {/* <section className="relative py-32 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
             className="mb-20"
@@ -758,7 +663,7 @@ const CosmicGateway = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* FAQ SECTION */}
       <section className="relative py-32 px-4 bg-gradient-to-b from-indigo-950/20 to-purple-950/20">
