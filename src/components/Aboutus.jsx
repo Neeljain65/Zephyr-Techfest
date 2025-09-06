@@ -93,7 +93,7 @@ const SkeletonOne = () => {
           hover: { opacity: 1 },
         }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className={`absolute rounded-sm  inset-0 overflow-y-scroll  bg-opacity-80 flex justify-center items-start text-white p-4 ${
+        className={`absolute rounded-sm  inset-0 sm:overflow-y-scroll md:overflow-y-hidden  bg-opacity-80 flex justify-center items-start text-white p-4 ${
           hovered ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
