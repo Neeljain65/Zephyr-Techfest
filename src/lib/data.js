@@ -389,7 +389,7 @@ const eventsData = [
   {
     id: 33,
     title: "Ideathon",
-    price: "Free",
+    price: "50",
     tag: "IEEE",
     college: "IEEE",
     image: "/event33.webp",
