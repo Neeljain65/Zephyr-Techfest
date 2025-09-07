@@ -14,7 +14,105 @@ import Link from "next/link";
 import Navbar from "@/components/navbar";
 import Image from "next/image";
 import { BentoGridThirdDemo } from "@/components/Aboutus";
-import { InfiniteMovingCardsDemo, InfiniteRightMovingCardsDemo } from "@/components/Sponsors";
+
+// --- UPDATED SPONSOR LOGOS ARRAY ---
+const sponsorLogosRow1 = [
+  { src: "/spon1.webp", name: "Lenovo" },
+  { src: "/spon2.webp", name: "CADD Centre" },
+  { src: "/spon3.webp", name: "Indian Bank" },
+  { src: "/spon4.webp", name: "Eunoia" },
+  { src: "/spon5.webp", name: "Global Edventures" },
+  { src: "/spon6.webp", name: "Off Kicks" },
+  { src: "/spon7.webp", name: "Golden Waffles" },
+  { src: "/spon8.webp", name: "Bombay Cake & Beans" },
+  { src: "/spon9.webp", name: "Mexibay" },
+  { src: "/spon10.webp", name: "Niche Baker" },
+];
+
+const sponsorLogosRow2 = [
+  // Make sure to add your next 10 images to the /public folder
+  // and update their names and paths here.
+  { src: "/spon11.webp", name: "Sponsor 11" },
+  { src: "/spon12.webp", name: "Sponsor 12" },
+  { src: "/spon13.webp", name: "Sponsor 13" },
+  { src: "/spon14.webp", name: "Sponsor 14" },
+  { src: "/spon15.webp", name: "Sponsor 15" },
+  { src: "/spon16.webp", name: "Sponsor 16" },
+  { src: "/spon17.webp", name: "Sponsor 17" },
+  { src: "/spon18.webp", name: "Sponsor 18" },
+  { src: "/spon19.webp", name: "Sponsor 19" },
+  { src: "/spon20.webp", name: "Sponsor 20" },
+];
+
+const SponsorScrollerLeft = () => {
+  const extendedLogos = [...sponsorLogosRow1, ...sponsorLogosRow1];
+  return (
+    <div className="w-full overflow-hidden mask-image:[linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+      <motion.div
+        className="flex gap-12 items-center"
+        animate={{
+          x: ["0%", "-100%"],
+          transition: {
+            ease: "linear",
+            duration: 20,
+            repeat: Infinity,
+          },
+        }}
+      >
+        {extendedLogos.map((sponsor, index) => (
+          <div
+            key={index}
+            className="flex-shrink-0 flex items-center justify-center h-24 w-[250px]"
+          >
+            <Image
+              src={sponsor.src}
+              alt={sponsor.name}
+              width={250}
+              height={120}
+              className="object-contain"
+            />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+const SponsorScrollerRight = () => {
+  const extendedLogos = [...sponsorLogosRow2, ...sponsorLogosRow2];
+  return (
+    <div className="w-full overflow-hidden mask-image:[linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+      <motion.div
+        className="flex gap-12 items-center"
+        animate={{
+          x: ["-100%", "0%"],
+          transition: {
+            ease: "linear",
+            duration: 20,
+            repeat: Infinity,
+          },
+        }}
+      >
+        {extendedLogos.map((sponsor, index) => (
+          <div
+            key={index}
+            className="flex-shrink-0 flex items-center justify-center h-24 w-[250px]"
+          >
+            <Image
+              src={sponsor.src}
+              alt={sponsor.name}
+              width={250}
+              height={120}
+              className="object-contain"
+            />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+// --- END SPONSOR SCROLLER COMPONENTS ---
 
 const CosmicGateway = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -67,12 +165,12 @@ const CosmicGateway = () => {
 
   // Stellar pulse effect
   // useEffect(() => {
-  //   const pulseInterval = setInterval(() => {
-  //     setStellarPulse(true);
-  //     setTimeout(() => setStellarPulse(false), 200);
-  //   }, 6000);
+  //   const pulseInterval = setInterval(() => {
+  //     setStellarPulse(true);
+  //     setTimeout(() => setStellarPulse(false), 200);
+  //   }, 6000);
 
-  //   return () => clearInterval(pulseInterval);
+  //   return () => clearInterval(pulseInterval);
   // }, []);
 
   const StarField = () => {
@@ -182,72 +280,67 @@ const CosmicGateway = () => {
     />
   );
 
-
-
   const glimpses = [
     {
       title: "Previous Mission Log",
       type: "HOLO_ARCHIVE",
       size: "2.4 PB",
-      image:"/event2.webp",
+      image: "/event2.webp",
       icon: "📡",
     },
     {
       title: "Tech Deployment",
       type: "QUANTUM_DATA",
       size: "847 TB",
-      image:"/event52.webp",
+      image: "/event52.webp",
       icon: "🛸",
     },
     {
       title: "Cosmic Integration",
       type: "STELLAR_RECORD",
       size: "1.2 PB",
-      image:"/event3.webp",
+      image: "/event3.webp",
       icon: "🌟",
     },
     {
       title: "Universe Analysis",
       type: "SPACE_VIZ",
       size: "564 TB",
-      image:"/event54.webp",
+      image: "/event54.webp",
       icon: "🪐",
     },
   ];
 
- const faqs = [
-  {
-    q: "What is Zephyr?",
-    a: "Zephyr is a 3-day annual techno-cultural festival featuring a blend of technical, non-technical, cultural, and fun events. It’s a platform where students can showcase talent, creativity, and innovation.",
-  },
-  {
-    q: "Who can participate?",
-    a: "Zephyr is open to students from all colleges and disciplines. Whether you’re into tech, arts, management, or cultural activities, there’s an event for everyone.",
-  },
-  {
-    q: "How do I register?",
-    a: "Participants can register online through the Zephyr portal. Simply choose your events, and complete the registration process.",
-  },
-  {
-    q: "What are the prizes?",
-    a: "Zephyr has an overall prize pool of more than ₹5 Lakhs. Winners also receive certificates, goodies, and exclusive opportunities for recognition.",
-  },
-  {
-    q: "Are there online events?",
-    a: "Yes, Zephyr hosts both offline and online events. Some competitions allow remote participation, while cultural and flagship events are held on campus.",
-  },
-];
-
+  const faqs = [
+    {
+      q: "What is Zephyr?",
+      a: "Zephyr is a 3-day annual techno-cultural festival featuring a blend of technical, non-technical, cultural, and fun events. It’s a platform where students can showcase talent, creativity, and innovation.",
+    },
+    {
+      q: "Who can participate?",
+      a: "Zephyr is open to students from all colleges and disciplines. Whether you’re into tech, arts, management, or cultural activities, there’s an event for everyone.",
+    },
+    {
+      q: "How do I register?",
+      a: "Participants can register online through the Zephyr portal. Simply choose your events, and complete the registration process.",
+    },
+    {
+      q: "What are the prizes?",
+      a: "Zephyr has an overall prize pool of more than ₹5 Lakhs. Winners also receive certificates, goodies, and exclusive opportunities for recognition.",
+    },
+    {
+      q: "Are there online events?",
+      a: "Yes, Zephyr hosts both offline and online events. Some competitions allow remote participation, while cultural and flagship events are held on campus.",
+    },
+  ];
 
   return (
     <div
       ref={containerRef}
       className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black text-white overflow-hidden relative"
     >
-     
-
       <div className="fixed inset-0">
-     
+        <StarField />
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-indigo-900/30 to-black/50" />
 
         <div className="absolute top-0 left-1/4 w-px h-full">
@@ -293,7 +386,7 @@ const CosmicGateway = () => {
 
                 <motion.div
                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                           w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                                       w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
                   animate={{
                     boxShadow: [
                       "0 0 20px rgba(139, 69, 249, 0.5)",
@@ -354,6 +447,59 @@ const CosmicGateway = () => {
         </div>
 
         <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+          style={{
+            x: useTransform(mouseX, [-500, 500], [-30, 30]),
+            y: useTransform(mouseY, [-500, 500], [-30, 30]),
+          }}
+        >
+          <motion.div
+            className="relative w-96 h-96"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          >
+            {/* Outer orbital rings */}
+            <div className="absolute inset-0 border border-purple-400/30 rounded-full" />
+            <div className="absolute inset-8 border border-blue-400/40 rounded-full transform rotate-45" />
+            <div className="absolute inset-16 border border-pink-400/50 rounded-full transform -rotate-45" />
+
+            {/* Central cosmic core */}
+            <motion.div
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                                         w-32 h-32 bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded-full"
+              animate={{
+                boxShadow: [
+                  "0 0 30px rgba(139, 69, 249, 0.5)",
+                  "0 0 80px rgba(139, 69, 249, 0.8)",
+                  "0 0 30px rgba(139, 69, 249, 0.5)",
+                ],
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+
+            {/* Orbiting particles */}
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-3 h-3 bg-white rounded-full"
+                style={{
+                  top: "50%",
+                  left: "50%",
+                  transformOrigin: `${80 + i * 20}px 0`,
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 10 + i * 2,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: i * 0.5,
+                }}
+              />
+            ))}
+          </motion.div>
+        </motion.div>
+
+        <motion.div
           className="text-center z-20 max-w-6xl mx-auto"
           initial={{ opacity: 0, y: 50 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : {}}
@@ -386,7 +532,7 @@ const CosmicGateway = () => {
                 textShadow: "0 0 20px rgba(255, 255, 255, 0.1)",
               }}
             >
-            TSDW Presents
+              TSDW Presents
             </motion.span>
             <motion.span
               className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-gray-200 to-purple-600"
@@ -433,246 +579,53 @@ const CosmicGateway = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4 }}
           >
-           
-              <Link href={"/zephyr-events"}>
+            <Link href={"/zephyr-events"}>
               <CosmicButton
-              variant="secondary"
-              className="text-sm tracking-[0.1em] uppercase"
-            >
-              Book Event
-            </CosmicButton>
-              </Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Central Cosmic Portal */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-          style={{
-            x: useTransform(mouseX, [-500, 500], [-30, 30]),
-            y: useTransform(mouseY, [-500, 500], [-30, 30]),
-          }}
-        >
-          <motion.div
-            className="relative w-96 h-96"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          >
-            {/* Outer orbital rings */}
-            <div className="absolute inset-0 border border-purple-400/30 rounded-full" />
-            <div className="absolute inset-8 border border-blue-400/40 rounded-full transform rotate-45" />
-            <div className="absolute inset-16 border border-pink-400/50 rounded-full transform -rotate-45" />
-
-            {/* Central cosmic core */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                         w-32 h-32 bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded-full"
-              animate={{
-                boxShadow: [
-                  "0 0 30px rgba(139, 69, 249, 0.5)",
-                  "0 0 80px rgba(139, 69, 249, 0.8)",
-                  "0 0 30px rgba(139, 69, 249, 0.5)",
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-            />
-
-            {/* Orbiting particles */}
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-3 h-3 bg-white rounded-full"
-                style={{
-                  top: "50%",
-                  left: "50%",
-                  transformOrigin: `${80 + i * 20}px 0`,
-                }}
-                animate={{ rotate: 360 }}
-                transition={{
-                  duration: 10 + i * 2,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: i * 0.5,
-                }}
-              />
-            ))}
+                variant="secondary"
+                className="text-sm tracking-[0.1em] uppercase"
+              >
+                Book Event
+              </CosmicButton>
+            </Link>
           </motion.div>
         </motion.div>
       </section>
 
       {/* ABOUT US SECTION */}
-       <BentoGridThirdDemo />
-    
-
-      {/* TIMELINE SECTION */}
-      {/* <section className="relative py-32 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="font-mono text-purple-300 text-lg mb-4 flex items-center gap-2">
-              📅 MISSION_TIMELINE.COSMOS
-            </div>
-            <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300">
-              Stellar Schedule
-            </h2>
-            <p className="text-xl text-blue-200 font-mono">
-              Four-dimensional mission phases
-            </p>
-          </motion.div>
-
-          <div className="space-y-8">
-            {timelineEvents.map((event, index) => (
-              <motion.div
-                key={index}
-                className="relative bg-gradient-to-r from-purple-900/30 to-indigo-900/30 backdrop-blur-sm 
-                         border border-purple-400/30 hover:border-purple-400/60 transition-all duration-500 rounded-xl
-                         shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20"
-                initial={{ opacity: 0, x: -100 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ x: 15, scale: 1.02 }}
-              >
-                <div className="p-8 flex items-center justify-between">
-                  <div className="flex items-center space-x-8">
-                    <div className="text-6xl">{event.icon}</div>
-                    <div className="text-center">
-                      <div className="font-mono text-2xl text-purple-300 mb-1">
-                        {event.date}
-                      </div>
-                      <div className="font-mono text-sm text-blue-300">
-                        {event.time}
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="text-2xl font-bold text-purple-100 mb-2">
-                        {event.title}
-                      </h3>
-                      <p className="text-blue-200 font-mono text-sm">
-                        {event.desc}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`px-4 py-2 font-mono text-xs border rounded-lg ${
-                      event.status === "READY"
-                        ? "border-green-400 text-green-300 bg-green-400/10"
-                        : event.status === "PENDING"
-                        ? "border-yellow-400 text-yellow-300 bg-yellow-400/10"
-                        : event.status === "QUEUED"
-                        ? "border-blue-400 text-blue-300 bg-blue-400/10"
-                        : "border-purple-400 text-purple-300 bg-purple-400/10"
-                    }`}
-                  >
-                    {event.status}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section> */}
+      <BentoGridThirdDemo />
 
       {/* SPONSORS SECTION */}
-      <section className="relative py-32 px-4 bg-gradient-to-b from-purple-950/20 to-indigo-950/20">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative py-32">
+        <div className="max-w-6xl mx-auto text-center space-y-16">
           <motion.div
-            className="mb-20"
+            className="mb-12"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div className="font-mono text-purple-300 text-lg mb-4 flex items-center gap-2">
+            <div className="font-mono text-purple-300 text-lg mb-4 flex items-center justify-center gap-2">
               🤝 GALACTIC_ALLIANCES.DB
             </div>
             <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300">
-              Cosmic Partners
+              Our Sponsors
             </h2>
             <p className="text-xl text-blue-200 font-mono">
-            Sponsors from last edition
+              Powering the next frontier of innovation
             </p>
           </motion.div>
 
-        <InfiniteMovingCardsDemo />
-        <InfiniteRightMovingCardsDemo />
-        </div>
-      </section>
-
-      {/* GLIMPSE SECTION */}
-      {/* <section className="relative py-32 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="font-mono text-purple-300 text-lg mb-4 flex items-center gap-2">
-              📚 COSMIC_ARCHIVES.LOG
-            </div>
-            <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">
-              Stellar Archives
-            </h2>
-            <p className="text-xl text-blue-200 font-mono">
-            A glimpse into our previous journeys
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {glimpses.map((glimpse, index) => (
-              <motion.div
-                key={index}
-                className="group bg-gradient-to-br from-indigo-900/40 to-purple-900/40 backdrop-blur-sm 
-                         border border-purple-400/30 hover:border-purple-400/60 overflow-hidden 
-                         transition-all duration-500 rounded-xl shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10, rotateX: 10 }}
-              >
-                <div
-                  className="aspect-video bg-gradient-to-br from-purple-800/30 to-blue-800/30 
-                              flex items-center justify-center border-b border-purple-400/30"
-                >
-                  <Image fill src={glimpse.image} alt={glimpse.title} className="text-6xl object-cover" />
-                </div>
-                <div className="p-4">
-                  <div className="font-mono text-xs text-purple-300 mb-2">
-                    {glimpse.type}
-                  </div>
-                  <h3 className="text-lg font-semibold text-purple-100 mb-2 group-hover:text-purple-300 transition-colors">
-                    {glimpse.title}
-                  </h3>
-                  <div className="flex justify-between items-center">
-                    <span className="font-mono text-xs text-blue-300">
-                      {glimpse.size}
-                    </span>
-                    <span className="font-mono text-xs text-green-400">
-                      🟢 ACCESSIBLE
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          {/* Add spacing between scrollers */}
+          <div className="space-y-12">
+            <SponsorScrollerLeft />
+            <SponsorScrollerRight />
           </div>
         </div>
-      </section> */}
-
+      </section>
       {/* FAQ SECTION */}
       <section className="relative py-32 px-4 bg-gradient-to-b from-indigo-950/20 to-purple-950/20">
         <div className="max-w-4xl mx-auto">
-          <div
-            className="mb-20"
-           
-          >
-            <div className="font-mono text-purple-300 text-lg mb-4 flex items-center gap-2">
+          <div className="mb-20">
+            <div className="font-mono text-purple-300 text-lg mb-4 flex items-center justify-center gap-2">
               ❓ COSMIC_DATABASE.QUERY
             </div>
             <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300">
@@ -688,12 +641,11 @@ const CosmicGateway = () => {
               <motion.div
                 key={index}
                 className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 backdrop-blur-sm 
-                         border border-purple-400/30 overflow-hidden rounded-xl shadow-lg shadow-purple-500/10"
-            
+                                       border border-purple-400/30 overflow-hidden rounded-xl shadow-lg shadow-purple-500/10"
               >
                 <motion.button
                   className="w-full p-6 text-left flex items-center justify-between 
-                           hover:bg-purple-800/30 transition-colors"
+                                         hover:bg-purple-800/30 transition-colors"
                   onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
                   whileHover={{ x: 10 }}
                 >
@@ -744,7 +696,6 @@ const CosmicGateway = () => {
             <p className="text-xl text-blue-200 font-mono mb-12">
               🌌 Initialize direct quantum communication with mission control 🌌
             </p>
-
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               {[
                 {
@@ -775,7 +726,7 @@ const CosmicGateway = () => {
                 <motion.div
                   key={index}
                   className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-sm 
-                           border border-purple-400/30 p-6 rounded-xl shadow-lg shadow-purple-500/10"
+                                        border border-purple-400/30 p-6 rounded-xl shadow-lg shadow-purple-500/10"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -807,14 +758,12 @@ const CosmicGateway = () => {
                 </motion.div>
               ))}
             </div>
-
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link href={"/zephyr-events"}>
-              <CosmicButton variant="primary" className="text-lg px-12 py-4">
-                🌟 Get Started
-              </CosmicButton>
+                <CosmicButton variant="primary" className="text-lg px-12 py-4">
+                  🌟 Get Started
+                </CosmicButton>
               </Link>
-             
             </div>
           </motion.div>
         </div>
