@@ -752,7 +752,7 @@ const eventsData = [
     tag: "BBA",
     college: "BBA",
     image:
-      "https://github.com/ap27killerclown/ap27killerclown/blob/main/event61.jpg?raw=true",
+      "https://raw.githubusercontent.com/ap27killerclown/ap27killerclown/refs/heads/main/491a4fbd-cad9-4941-9f1b-755522c95e25.png",
     desc: "A vintage-themed photo booth designed to create a nostalgic atmosphere for attendees. The setup will include retro backdrops, fairy lights, and an array of antique props such as gramophones, hats, mustaches, old cameras, and funky vintage frames, providing the perfect opportunity to capture memorable and stylish photographs.",
     phone_no: "+91 99694 61707",
     prize_pool: "Not Applicable",
