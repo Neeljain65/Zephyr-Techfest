@@ -8,63 +8,58 @@ import { motion } from "framer-motion";
 import QRCode from "react-qr-code";
 import { usePDF } from "react-to-pdf";
 
+// UPDATED: Added phone_no to the interface
 interface RegistrationData {
   eventName: string;
   name: string;
   college: string;
   paymentStatus: string;
   teamSize?: number;
+  phone_no?: string;
 }
 
-// Print styles to fix faded colors + keep ticket on one page
+// Print styles for a stylish PDF layout
 const PrintStyles = () => (
   <style jsx global>{`
-   @media print {
-  @page {
-    size: A4;
-    margin: 0;
-  }
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
 
-  body {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    background: #0c0a18 !important;
-    margin: 0;
-    padding: 0;
-  }
+      body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background: #0c0a18 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
 
-  body * {
-    visibility: hidden;
-  }
+      body * {
+        visibility: hidden;
+      }
 
-  .printable-ticket,
-  .printable-ticket * {
-    visibility: visible;
-  }
+      .printable-ticket,
+      .printable-ticket * {
+        visibility: visible;
+      }
 
-  .printable-ticket {
-    background: #111827 !important;
-    width: 210mm;
-    max-height: 297mm;
-    margin: 0 auto;
-    padding: 15mm;
-    box-sizing: border-box;
-    page-break-inside: avoid;
-    page-break-after: avoid;
-    overflow: hidden;
-    box-shadow: none !important;
-    position: absolute !important;
-    left: 0;
-    top: 0;
-    transform: none !important;
-  }
+      .printable-ticket {
+        background: #111827 !important;
+        width: 180mm;
+        box-shadow: 0 0 40px rgba(139, 92, 246, 0.3) !important;
+        position: static !important;
+        transform: none !important;
+        margin: 0;
+        page-break-inside: avoid;
+      }
 
-  .no-print {
-    display: none !important;
-  }
-}
-
-
+      .no-print {
+        display: none !important;
+      }
+    }
   `}</style>
 );
 
@@ -95,15 +90,14 @@ export default function TicketPage() {
 
   const { toPDF, targetRef } = usePDF({
     filename: `zephyr-ticket-${registrationId}.pdf`,
-    page: { 
-      format: 'A4',
-      orientation: 'portrait',
-      margin: 0
+    page: {
+      format: "A4",
+      orientation: "portrait",
     },
     canvas: {
-      mimeType: 'image/png',
-      qualityRatio: 1
-    }
+      mimeType: "image/png",
+      qualityRatio: 1,
+    },
   });
 
   if (isLoading) {
@@ -132,7 +126,7 @@ export default function TicketPage() {
       <motion.div
         ref={targetRef}
         className="w-full max-w-md bg-slate-900/40 border border-purple-400/30 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-purple-500/10 printable-ticket"
-        style={{ breakInside: 'avoid' }}
+        style={{ breakInside: "avoid" }}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -141,7 +135,7 @@ export default function TicketPage() {
           <h1
             className="text-2xl font-bold"
             style={{
-              background: "linear-gradient(to right, #d8b4fe, #f9a8d4)", // ✅ safe hex gradient
+              background: "linear-gradient(to right, #d8b4fe, #f9a8d4)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -183,6 +177,19 @@ export default function TicketPage() {
           Scan QR at entry. ID: {registrationId}
         </p>
 
+        {/* === NEW CONTACT & WHATSAPP INFO SECTION === */}
+        <div className="border-t border-purple-500/20 pt-4 mt-6 text-center space-y-2">
+          <p className="text-sm font-mono text-slate-300">
+            You will be added to the event WhatsApp group shortly.
+          </p>
+          <p className="text-xs text-slate-400">
+            If not added within 24 hours, please contact the Event Manager:{" "}
+            <span className="font-bold text-slate-200">
+              {registration.phone_no}
+            </span>
+          </p>
+        </div>
+
         {/* === Guidelines === */}
         <div className="border-t border-purple-500/20 pt-4 mt-6">
           <h2 className="font-mono text-center text-purple-300 text-sm mb-3">
@@ -192,19 +199,24 @@ export default function TicketPage() {
             <li>Entry requires this e-card and a valid college ID card.</li>
             <li>Gates close 30 minutes prior to event start. No late entry.</li>
             <li>Bags subject to security checks.</li>
-            <li>No sharp objects, flammable materials, or outside food.</li>
+            <li>
+              No sharp objects, flammable materials(including perfumes & deos),
+              or outside food.
+            </li>
             <li>Organizers not responsible for lost/stolen items.</li>
             <li>No re-entry to event premises allowed.</li>
             <li>No alcohol, narcotics or tobacco on campus.</li>
-            <li>Follow all instructions from event staff and security.</li>
             <li>Ticket is non-transferable and non-refundable.</li>
+            <li>
+              Screenshot or Physical Print of this ticket both will be accepted
+              at the entry gate
+            </li>
           </ol>
         </div>
       </motion.div>
 
       {/* Download/Print Button */}
       <div className="flex gap-4 mt-8 no-print">
-        
         <motion.button
           onClick={() => window.print()}
           className="relative px-6 py-3 border-2 font-mono font-semibold transition-all duration-300 backdrop-blur-sm rounded-lg bg-indigo-600/30 border-indigo-400/60 text-indigo-200 hover:bg-indigo-500/40 hover:shadow-indigo-500/50"

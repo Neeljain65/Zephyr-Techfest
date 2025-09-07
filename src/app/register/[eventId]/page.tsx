@@ -156,6 +156,7 @@ export default function RegistrationPage() {
       const docRef = await addDoc(collection(db, "registrations"), {
         eventId: selectedEvent.id,
         eventName: selectedEvent.title,
+        phone_no: selectedEvent.phone_no, // ADDED: Save the event manager's phone number
         ...formData,
         finalPrice: numericPrice,
         paymentStatus: "pending",
@@ -283,13 +284,11 @@ export default function RegistrationPage() {
             </div>
           </div>
 
-          {/* UPDATED: This whole block is now conditional */}
           {selectedEvent.teamSize && selectedEvent.teamSize.max > 1 && (
             <div className="space-y-6 pt-6 border-t border-purple-500/20">
               <h2 className="font-mono text-lg text-purple-300">
                 Team Details
               </h2>
-              {/* This dropdown only shows if there's a choice to be made */}
               {selectedEvent.teamSize.min !== selectedEvent.teamSize.max && (
                 <div>
                   <FormLabel>Number of Team Members</FormLabel>

@@ -196,7 +196,8 @@ const CosmicGateway = () => {
         tabIndex={0}
         className="relative bg-gradient-to-br from-slate-900/40 to-indigo-900/30 border border-purple-400/20 rounded-xl p-3 cursor-pointer hover:scale-[1.01] hover:shadow-lg transition-transform duration-150"
       >
-        <div className="absolute top-3 right-3 text-xs font-mono px-2 py-1 bg-black/50 backdrop-blur rounded-full border border-white/10">
+        {/* --- MODIFIED TAG FOR VISIBILITY --- */}
+        <div className="absolute top-3 right-3 text-xs font-mono px-3 py-1 bg-black/70 backdrop-blur rounded-full border border-white/20 text-white z-10">
           {event.tag}
         </div>
 
@@ -369,8 +370,8 @@ const CosmicGateway = () => {
       >
         <DialogContent
           className="bg-slate-950 border-purple-800/50 text-slate-200 
-               w-[95%] max-w-lg max-h-[90vh] mx-auto my-auto 
-               rounded-xl p-6 overflow-y-auto"
+            w-[95%] max-w-lg max-h-[90vh] mx-auto my-auto 
+            rounded-xl p-6 overflow-y-auto"
         >
           <DialogHeader>
             <DialogTitle className="text-slate-50">
