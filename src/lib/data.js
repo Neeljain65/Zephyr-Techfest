@@ -770,6 +770,18 @@ const eventsData = [
     prize_pool: "₹8000",
     teamSize: { min: 1, max: 1 },
   },
+  {
+    id: 63,
+    title: "Murderer Among Us",
+    price: "60",
+    tag: "BCA",
+    college: "BCA",
+    image: "/event63.webp",
+    desc: "Step into a classroom turned crime scene in this thrilling mystery game! Each round, every player receives unique scripts with secrets and clues about a shocking campus murder. But beware — one of you is the hidden murderer! Can you solve the case before time runs out? ",
+    phone_no: "8452801821",
+    prize_pool: "Upto ₹2000",
+    teamSize: { min: 1, max: 1 },
+  },
 ];
 
 export default eventsData;
