@@ -48,7 +48,7 @@ export default function Navbar() {
         <div className="px-4 pt-2 pb-4 space-y-1">
           <Link href="/" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Home</Link>
           <Link href="/zephyr-events" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Events</Link>
-          <Link href="/schedule" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Schedule</Link>
+          {/* <Link href="/schedule" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Schedule</Link> */}
           <Link href="/about" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">About</Link>
           <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Contact</Link>
         </div>

@@ -471,16 +471,3 @@ const CosmicGateway = () => {
 };
 
 export default CosmicGateway;
-// ```
-
-// ### **Step 2: Clean Up Your Project**
-
-// Now that you are no longer using the payment and ticketing system, you can safely delete the following files and folders from your project to keep it clean:
-
-// * **Delete the registration form folder:** `src/app/register/`
-// * **Delete the ticket page folder:** `src/app/ticket/`
-// * **Delete the API routes folder:** `src/app/api/`
-// * **Delete the Firebase config file:** `src/lib/firebase.js`
-// * **Uninstall unused packages:** Open your terminal and run the following command to remove the now-unnecessary libraries:
-//     ```bash
-//     npm uninstall firebase react-to-pdf jspdf html2canvas razorpay
