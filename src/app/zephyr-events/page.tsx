@@ -16,7 +16,7 @@ import {
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 
 const CosmicGateway = () => {
-  const [isClient, setIsClient] = useState(false); // Fix for Hydration Error
+  const [isClient, setIsClient] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [systemStatus, setSystemStatus] = useState("INITIALIZING");
   const containerRef = useRef(null);
@@ -25,7 +25,6 @@ const CosmicGateway = () => {
   const mouseY = useMotionValue(0);
 
   useEffect(() => {
-    // This hook runs only on the client side, after the component mounts
     setIsClient(true);
   }, []);
 
@@ -141,6 +140,7 @@ const CosmicGateway = () => {
     desc?: string;
     prize_pool?: string;
     teamSize?: { min: number; max: number };
+    phone_no?: string;
   }
 
   const events: EventType[] = eventsData;
@@ -196,7 +196,6 @@ const CosmicGateway = () => {
         tabIndex={0}
         className="relative bg-gradient-to-br from-slate-900/40 to-indigo-900/30 border border-purple-400/20 rounded-xl p-3 cursor-pointer hover:scale-[1.01] hover:shadow-lg transition-transform duration-150"
       >
-        {/* --- MODIFIED TAG FOR VISIBILITY --- */}
         <div className="absolute top-3 right-3 text-xs font-mono px-3 py-1 bg-black/70 backdrop-blur rounded-full border border-white/20 text-white z-10">
           {event.tag}
         </div>
@@ -216,6 +215,20 @@ const CosmicGateway = () => {
         <div className="text-xs text-purple-200 font-mono">{displayPrice}</div>
       </div>
     );
+  };
+
+  // --- NEW: Function to create the WhatsApp link ---
+  const createWhatsAppLink = () => {
+    if (!selectedEvent || !selectedEvent.phone_no) return "#";
+
+    // Remove any special characters from the phone number
+    const phoneNumber = selectedEvent.phone_no.replace(/[^0-9]/g, "");
+    const message = `Hello, I would like to inquire about the registration process for the event: *${selectedEvent.title}*. Could you please provide the necessary details?`;
+
+    // Encode the message to be URL-safe
+    const encodedMessage = encodeURIComponent(message);
+
+    return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   };
 
   return (
@@ -360,7 +373,6 @@ const CosmicGateway = () => {
         </div>
       </section>
 
-      {/* --- UPDATED DIALOG --- */}
       <Dialog
         open={dialogOpen}
         onOpenChange={(open) => {
@@ -368,35 +380,31 @@ const CosmicGateway = () => {
           setDialogOpen(open);
         }}
       >
-        <DialogContent
-          className="bg-slate-950 border-purple-800/50 text-slate-200 
-            w-[95%] max-w-lg max-h-[90vh] mx-auto my-auto 
-            rounded-xl p-6 overflow-y-auto"
-        >
+        <DialogContent className="bg-slate-950 border-purple-800/50 text-slate-200 w-[95%] max-w-lg max-h-[90vh] mx-auto my-auto rounded-xl p-6 overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-slate-50">
+            <DialogTitle className="text-slate-50 text-2xl font-bold">
               {selectedEvent?.title ?? "Event Details"}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="mt-2 flex flex-col md:flex-row gap-4">
-            <div className="w-full h-40 md:h-80 bg-slate-800 rounded-md flex items-center justify-center relative overflow-hidden">
-              {selectedEvent && (
-                <Image
-                  src={selectedEvent.image}
-                  alt={selectedEvent.title}
-                  fill
-                  className="object-contain rounded-md"
-                />
-              )}
-            </div>
+          <div className="mt-2 w-full h-60 bg-slate-900 rounded-md flex items-center justify-center relative overflow-hidden">
+            {selectedEvent && (
+              <Image
+                src={selectedEvent.image}
+                alt={selectedEvent.title}
+                fill
+                className="object-cover"
+              />
+            )}
           </div>
 
-          <div className="w-full flex flex-col items-center mt-4 space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center w-full p-4 bg-slate-900 rounded-lg border border-slate-800">
-              <div>
-                <p className="font-mono text-xs text-purple-400 mb-1">FEE</p>
-                <p className="font-semibold text-lg text-white">
+          <div className="flex-1 mt-4 space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center p-4 bg-black/30 rounded-lg border border-slate-800">
+              <div className="p-2 sm:p-0">
+                <p className="font-mono text-xs text-purple-400 mb-1 tracking-widest">
+                  FEE
+                </p>
+                <p className="font-bold text-xl text-white">
                   {Array.isArray(selectedEvent?.prices)
                     ? `From ₹${selectedEvent?.prices[0].cost}`
                     : typeof selectedEvent?.price === "string" &&
@@ -405,19 +413,19 @@ const CosmicGateway = () => {
                     : selectedEvent?.price}
                 </p>
               </div>
-              <div>
-                <p className="font-mono text-xs text-purple-400 mb-1">
+              <div className="p-2 sm:p-0">
+                <p className="font-mono text-xs text-purple-400 mb-1 tracking-widest">
                   PRIZE POOL
                 </p>
-                <p className="font-semibold text-lg text-white">
+                <p className="font-bold text-xl text-white">
                   {selectedEvent?.prize_pool}
                 </p>
               </div>
-              <div>
-                <p className="font-mono text-xs text-purple-400 mb-1">
+              <div className="p-2 sm:p-0">
+                <p className="font-mono text-xs text-purple-400 mb-1 tracking-widest">
                   TEAM SIZE
                 </p>
-                <p className="font-semibold text-lg text-white">
+                <p className="font-bold text-xl text-white">
                   {selectedEvent?.teamSize
                     ? selectedEvent.teamSize.min === selectedEvent.teamSize.max
                       ? `${selectedEvent.teamSize.min}`
@@ -427,33 +435,52 @@ const CosmicGateway = () => {
               </div>
             </div>
 
-            <DialogDescription className="pt-4 border-t border-slate-800 text-slate-400 text-sm sm:text-base leading-relaxed w-full">
+            <DialogDescription className="pt-4 border-t border-slate-800 text-slate-300 text-base leading-relaxed">
               {selectedEvent?.desc}
             </DialogDescription>
           </div>
 
           <DialogFooter>
-            <div className="flex gap-2 mt-4 w-full">
+            {/* --- UPDATED BUTTONS SECTION --- */}
+            <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full">
               {selectedEvent && (
-                <Link href={`/register/${selectedEvent.id}`} className="flex-1">
-                  <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-md font-mono cursor-pointer hover:bg-purple-500 transition-colors duration-200">
-                    Register
+                <a
+                  href={createWhatsAppLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <button className="w-full px-4 py-3 bg-green-500 text-white rounded-md font-mono cursor-pointer hover:bg-green-400 transition-colors duration-200 text-lg font-bold">
+                    Register on WhatsApp
                   </button>
-                </Link>
+                </a>
               )}
               <DialogClose asChild>
-                <button className="px-4 py-2 bg-slate-800 text-white rounded-md font-mono cursor-pointer hover:bg-slate-700 transition-colors duration-200">
+                <button className="w-full sm:w-auto px-6 py-3 bg-slate-800 text-white rounded-md font-mono cursor-pointer hover:bg-slate-700 transition-colors duration-200">
                   Close
                 </button>
               </DialogClose>
             </div>
+            {/* --- END UPDATED BUTTONS SECTION --- */}
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
       <Footer />
     </div>
   );
 };
 
 export default CosmicGateway;
+// ```
+
+// ### **Step 2: Clean Up Your Project**
+
+// Now that you are no longer using the payment and ticketing system, you can safely delete the following files and folders from your project to keep it clean:
+
+// * **Delete the registration form folder:** `src/app/register/`
+// * **Delete the ticket page folder:** `src/app/ticket/`
+// * **Delete the API routes folder:** `src/app/api/`
+// * **Delete the Firebase config file:** `src/lib/firebase.js`
+// * **Uninstall unused packages:** Open your terminal and run the following command to remove the now-unnecessary libraries:
+//     ```bash
+//     npm uninstall firebase react-to-pdf jspdf html2canvas razorpay

@@ -7,7 +7,7 @@ const eventsData = [
     college: "CSI",
     image: "/event1.webp",
     desc: "Precision aiming and target shooting competition.",
-    phone_no: "+91 9987330273",
+    phone_no: "+91 7020976545", //9987330273
     prize_pool: "Vouchers",
     teamSize: { min: 1, max: 1 },
   },
