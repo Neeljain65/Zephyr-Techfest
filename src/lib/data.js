@@ -572,7 +572,7 @@ const eventsData = [
     image: "/event47.webp",
     desc: "This is a brief description for Event 41.",
     phone_no: "9152026104",
-    prize_pool: "₹",
+    prize_pool: "₹2000",
     teamSize: { min: 1, max: 1 },
   },
   {
