@@ -110,13 +110,13 @@ export default function Navbar() {
           </Link>
           {/* <Link href="/schedule" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Schedule</Link> */}
           <Link
-            href="/about"
+            href="#About"
             className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5"
           >
             About
           </Link>
           <Link
-            href="/contact"
+            href="#Contact"
             className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5"
           >
             Contact

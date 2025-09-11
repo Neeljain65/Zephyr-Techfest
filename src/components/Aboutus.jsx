@@ -10,23 +10,24 @@ import { useState, useEffect } from "react";
 // import Image from "next/image";
 export function BentoGridThirdDemo() {
   return (
-    <div className="container px-5 my-20 z-10 relative before:absolute before:bg-gradient-to-b from-purple-600 via-purple-950 to-black  before:-inset-2 before:-z-10 before:blur-3xl before:round-[inherit]">
-      <BentoGrid className="max-w-7xl mx-auto md:auto-rows-[30rem]">
-        {items.map((item, i) => (
-          <BentoGridItem
-            key={i}
-            title={item.title}
-            description={item.description}
-            header={item.header}
-            className={cn("[&>p:text-lg]", item.className)}
-            icon={item.icon}
-          />
-        ))}
-      </BentoGrid>
-    </div>
+    <section id="About">
+      <div className="container px-5 my-20 z-10 relative before:absolute before:bg-gradient-to-b from-purple-600 via-purple-950 to-black  before:-inset-2 before:-z-10 before:blur-3xl before:round-[inherit]">
+        <BentoGrid className="max-w-7xl mx-auto md:auto-rows-[30rem]">
+          {items.map((item, i) => (
+            <BentoGridItem
+              key={i}
+              title={item.title}
+              description={item.description}
+              header={item.header}
+              className={cn("[&>p:text-lg]", item.className)}
+              icon={item.icon}
+            />
+          ))}
+        </BentoGrid>
+      </div>
+    </section>
   );
 }
-
 
 //   const variants = {
 //     initial: {
@@ -75,7 +76,6 @@ export function BentoGridThirdDemo() {
 //   );
 // };
 
-
 const SkeletonOne = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -98,21 +98,19 @@ const SkeletonOne = () => {
         }`}
       >
         <p className="lg:text-xl text-sm text-justify">
-      Ever since it was first organized in 2004, Zephyr has
-been the most awaited event among the students of
-Thakur College of Engineering and Technology. This
-technical festival aims at providing students with a
-platform to enhance their technical skills. Each Year
-with a new edition, Zephyr brings new events such as
-workshops on in-demand technology and skills along
-with gaming tournaments and fun events. The theme of
-Zephyr'25 is Spectrum of Innovation. The time traveler,
-equipped with knowledge about the time period they
-wish to visit, steps into the machine. The interior is
-filled with an array of flashing lights, complex
-instruments, and a central control panel. After entering
-the desired date and time into the control panel, the
-traveler activates the machine. </p>
+          Ever since it was first organized in 2004, Zephyr has been the most
+          awaited event among the students of Thakur College of Engineering and
+          Technology. This technical festival aims at providing students with a
+          platform to enhance their technical skills. Each Year with a new
+          edition, Zephyr brings new events such as workshops on in-demand
+          technology and skills along with gaming tournaments and fun events.
+          The theme of Zephyr'25 is Spectrum of Innovation. The time traveler,
+          equipped with knowledge about the time period they wish to visit,
+          steps into the machine. The interior is filled with an array of
+          flashing lights, complex instruments, and a central control panel.
+          After entering the desired date and time into the control panel, the
+          traveler activates the machine.{" "}
+        </p>
       </motion.div>
 
       <motion.div
@@ -129,12 +127,14 @@ traveler activates the machine. </p>
             Zepyr
           </span>
         </p>
-       <div>
-         <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">Through</p>
-        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">
-          Intelligence
-        </p>
-       </div>
+        <div>
+          <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+            Through
+          </p>
+          <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">
+            Intelligence
+          </p>
+        </div>
       </motion.div>
     </motion.div>
   );
@@ -163,7 +163,11 @@ const SkeletonFive = () => {
         }`}
       >
         <p className="lg:text-lg text-sm  text-justify">
-        The TCET Student Development and Welfare Association (TSDW), established in 2004-05 under the guidelines of Mumbai University, serves as a dynamic platform for creativity, innovation, and holistic growth. Commonly known as the Student Council, TSDW represents the student body and spearheads flagship events 
+          The TCET Student Development and Welfare Association (TSDW),
+          established in 2004-05 under the guidelines of Mumbai University,
+          serves as a dynamic platform for creativity, innovation, and holistic
+          growth. Commonly known as the Student Council, TSDW represents the
+          student body and spearheads flagship events
         </p>
       </motion.div>
 
@@ -188,7 +192,6 @@ const SkeletonFive = () => {
 
 export default SkeletonFive;
 
-
 const items = [
   {
     title: "Zephyr 2025",
@@ -201,8 +204,6 @@ const items = [
     className: "md:col-span-2",
     // icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
   },
-  
-
 
   {
     title: "TSDW ",
