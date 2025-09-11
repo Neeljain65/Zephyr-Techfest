@@ -11,16 +11,40 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2">
-              <img src="/images (4).jpeg" alt="Zephyr Logo" className="h-12 w-12 rounded-full" />
+              <img
+                src="/images (4).jpeg"
+                alt="Zephyr Logo"
+                className="h-12 w-12 rounded-full"
+              />
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="font-mono text-sm text-white/90 hover:text-white">Home</Link>
-            <Link href="/zephyr-events" className="font-mono text-sm text-white/90 hover:text-white">Events</Link>
+            <Link
+              href="/"
+              className="font-mono text-sm text-white/90 hover:text-white"
+            >
+              Home
+            </Link>
+            <Link
+              href="/zephyr-events"
+              className="font-mono text-sm text-white/90 hover:text-white"
+            >
+              Events
+            </Link>
 
-            <Link href="#About" className="font-mono text-sm text-white/90 hover:text-white">About</Link>
-            <Link href="#Contact" className="font-mono text-sm text-white/90 hover:text-white">Contact</Link>
+            <Link
+              href="#About"
+              className="font-mono text-sm text-white/90 hover:text-white"
+            >
+              About
+            </Link>
+            <Link
+              href="#Contact"
+              className="font-mono text-sm text-white/90 hover:text-white"
+            >
+              Contact
+            </Link>
           </nav>
 
           <div className="flex items-center md:hidden">
@@ -30,12 +54,34 @@ export default function Navbar() {
               className="p-2 rounded-md text-white/90 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               {open ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               )}
             </button>
@@ -44,13 +90,37 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <div className={`md:hidden ${open ? "block" : "hidden"} border-t border-white/5 bg-black/50`}>
+      <div
+        className={`md:hidden ${
+          open ? "block" : "hidden"
+        } border-t border-white/5 bg-black/50`}
+      >
         <div className="px-4 pt-2 pb-4 space-y-1">
-          <Link href="/" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Home</Link>
-          <Link href="/zephyr-events" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Events</Link>
+          <Link
+            href="/"
+            className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5"
+          >
+            Home
+          </Link>
+          <Link
+            href="/zephyr-events"
+            className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5"
+          >
+            Events
+          </Link>
           {/* <Link href="/schedule" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Schedule</Link> */}
-          <Link href="/about" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">About</Link>
-          <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5">Contact</Link>
+          <Link
+            href="/about"
+            className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5"
+          >
+            About
+          </Link>
+          <Link
+            href="/contact"
+            className="block px-3 py-2 rounded-md text-base font-mono text-white/90 hover:bg-white/5"
+          >
+            Contact
+          </Link>
         </div>
       </div>
     </header>
