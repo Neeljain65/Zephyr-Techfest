@@ -329,7 +329,7 @@ const CosmicGateway = () => {
               </motion.h2>
             </div>
             <div className="flex items-center gap-3">
-              <label className="text-xs font-mono text-purple-300 mr-2">
+              {/* <label className="text-xs font-mono text-purple-300 mr-2">
                 Sort
               </label>
               <select
@@ -340,8 +340,8 @@ const CosmicGateway = () => {
                 <option value="alpha">Alphabetical</option>
                 <option value="price-asc">Price: Low → High</option>
                 <option value="price-desc">Price: High → Low</option>
-              </select>
-              <label className="text-xs font-mono text-purple-300 ml-4 mr-2">
+              </select> */}
+              <label className="text-s font-mono text-purple-300 ml-4 mr-2">
                 Committee
               </label>
               <select
